@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn mean (nums: &[i32]) -> f64 {
     let sum: i32 = nums.iter().sum();
     sum as f64 / nums.len() as f64
@@ -17,9 +19,23 @@ fn median (nums: &[i32]) -> f64 {
     }
 }
     
+fn mode (nums: &[i32]) -> i32 {
+    let mut counts: HashMap<i32, usize> = HashMap::new();
+
+    for &num in nums {
+        *counts.entry(num).or_insert(0) += 1;
+    }
+
+    counts
+        .into_iter()
+        .max_by_key(|&(_value, count)| count)
+        .map(|(value, _count)| value)
+        .unwrap()
+}
 
 fn main() {
     let data = vec![5,1,2,2,5,4,3,1,4,5,5];
     println!("Mean: {}", mean(&data));
     println!("Median: {}", median(&data));
+    println!("Mode: {}", mode(&data));
 }
