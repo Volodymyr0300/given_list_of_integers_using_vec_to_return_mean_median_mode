@@ -1,0 +1,6 @@
+[package]
+name = "given_list_of_integers_using_vec_to_return_mean_median_mode"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
