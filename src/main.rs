@@ -1,5 +1,12 @@
 use std::collections::HashMap;
 
+#[derive(Debug)]
+struct Stats {
+    mean: f64,
+    median: f64,
+    mode: i32,
+}
+
 fn mean (nums: &[i32]) -> f64 {
     let sum: i32 = nums.iter().sum();
     sum as f64 / nums.len() as f64
@@ -33,9 +40,32 @@ fn mode (nums: &[i32]) -> i32 {
         .unwrap()
 }
 
+fn compute_stats(nums: &[i32]) -> Option<Stats> {
+    if nums.is_empty() {
+        return None;
+    }
+    Some(Stats {
+        mean: mean(nums),
+        median: median(nums),
+        mode: mode(nums),
+    })
+}
+
 fn main() {
     let data = vec![5,1,2,2,5,4,3,1,4,5,5];
     println!("Mean: {}", mean(&data));
     println!("Median: {}", median(&data));
     println!("Mode: {}", mode(&data));
+    
+    match compute_stats(&data) {
+        Some(stats) => {
+            println!("Mean: {}", stats.mean);
+            println!("Median: {}", stats.median);
+            println!("Mode: {}", stats.mode);
+            println!("Debug: {:?}", stats);
+        }
+        None => {
+            println!("The list is empty");
+        }
+    }
 }
